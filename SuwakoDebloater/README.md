@@ -29,5 +29,5 @@ You can download this along with other tools in the suite in the [**Releases tab
 - Most of you when running the app may end up with it looking like this instead of what you saw above:
 <p align=center><img src="https://github.com/user-attachments/assets/58e30cc9-cda7-46f0-8377-55de971d621a" width="800"></p>
 
-- This is **"non-elevated" mode**, a mode that allows you to use some functionalities like current-user debloating and component reintalling without requiring evelation to work. It's helpful in cases like you have your own user on a guest system, and wants to debloat just your space but don't have sufficient permissions granted. 
+- This is **"non-elevated" mode**, a mode that allows you to use some functionalities like current-user debloating and component reintalling without requiring elevation to work. It's helpful in cases like you have your own user on a guest system, and wants to debloat just your space but don't have sufficient permissions granted. 
 - To use all functionalities of the app, just right-click and **"Run as Administrator"**, and everything will work as described. 
