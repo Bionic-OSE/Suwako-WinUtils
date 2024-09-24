@@ -1,7 +1,9 @@
 # Suwako Feeds
 Enables **News and Interest** on unsupported editions or Edge-less installs of Windows 10 builds 1904x.962 and later. 
 
-![SuwakoFeeds on Windows 10 Enterprise LTSC 2021 (OS Build 19044.4894)](https://github.com/user-attachments/assets/4963765d-3e12-4878-bbd4-a6b6f5e12d2c)
+<p align=center><img src="https://github.com/user-attachments/assets/4963765d-3e12-4878-bbd4-a6b6f5e12d2c">
+
+You can download this along with other tools in the suite in the [**Releases tab**](https://github.com/Bionic-OSE/Suwako-WinUtils/releases/tag/latest)
 
 ---
 ## Features 
