@@ -7,7 +7,7 @@ This tool suits for newly installed Windows systems, where its goal is to give y
 <p align=center><img src="https://github.com/user-attachments/assets/c152320f-a633-4b20-9012-ebbb38d7541f"></p>  
 <sup>(There are some ad tiles which won't be removed, so I removed them and all other tiles myself, resulting in a truly LTSC-like look)</sup>
 
-You can download this along with other tools in the suite in the [**Releases tab**](https://github.com/Bionic-OSE/Suwako-WinUtils/releases/tag/latest)
+You can download this along with other tools in the suite in the [**Releases tab**](https://github.com/Bionic-OSE/Suwako-WinUtils/releases/latest)
 
 ---
 
