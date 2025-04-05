@@ -6,7 +6,7 @@ function Show-Branding {
 		[int32]$mode
 	)
 	switch ($mode) {
-		0 {$modename = "Version 4.0 - (c) Bionic Butter"}
+		0 {$modename = "Version 4.0.1 - (c) Bionic Butter"}
 		1 {$modename = "Debloater module"}
 		2 {$modename = "Components reinstaller module"}
 	}

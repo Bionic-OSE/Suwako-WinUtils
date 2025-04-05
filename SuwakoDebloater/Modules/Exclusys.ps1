@@ -38,4 +38,5 @@ $debloat_exclusys = @(
 	"E2A4F912-2574-4A75-9BB0-0D023378592B"
 	"c5e2524a-ea46-4f67-841-6a9465d9d515"
 )
-if ($build -ge 22621) {$debloat_exclusys += "Microsoft.DesktopAppInstaller"}
+if ($build -ge 22621) {$debloat_exclusys += "Microsoft.DesktopAppInstaller","Microsoft.UI.Xaml.CBS"}
+if ($build -ge 26100) {$debloat_exclusys += "Microsoft.WindowsAppRuntime.CBS","Microsoft.WindowsAppRuntime.CBS.1.6"}

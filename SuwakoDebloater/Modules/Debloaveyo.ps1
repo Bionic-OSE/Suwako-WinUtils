@@ -19,8 +19,8 @@ if ($edwvaveyo -eq 1) {
 }
 
 $ErrorActionPreference = 'SilentlyContinue'
-Write-Host -ForegroundColor Cyan -BackgroundColor DarkGray "Removing Microsoft Edge components..."
-Write-Host "`r`nEdge Removal - AveYo, 2023.09.14 (modified by Bionic Butter)`r`n"
+Write-Host -ForegroundColor Cyan -BackgroundColor DarkGray "Removing Microsoft Edge and its components..."
+Write-Host "`r`nEdge Removal - AveYo, 2023.09.14 (modified by Bionic Butter, 2025.04.05)`r`n"
 
 $global:IS64 = [Environment]::Is64BitOperatingSystem
 $global:IFEO = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options'
@@ -112,12 +112,28 @@ foreach ($choice in $remove_appx) { if ('' -eq $choice.Trim()) {continue}
 
 Write-Host -ForegroundColor Cyan "Attempting to uninstall Edge (and WebView based on your selection)"
 ## 5 run found *Edge* setup.exe with uninstall args and wait in-between
-foreach ($setup in $edges) { if (-not (test-path $setup)) {continue}
+foreach ($setup in $edges) { 
+	if (-not (test-path $setup)) {continue}
 	if ($setup -like '*EdgeWebView*') {$target = "--msedgewebview"} else {$target = "--msedge"}
 	$sulevel = ('--system-level','--user-level')[$setup -like '*\AppData\Local\*']
 	$removal = "--uninstall $target $sulevel --verbose-logging --force-uninstall"
-	try {write-host $setup $removal; start -wait $setup -args $removal} catch {}
-	do {sleep 3} while ((get-process -name 'setup','MicrosoftEdge*' -ea 0).Path -like '*\Microsoft\Edge*')
+	$w = $PSScriptRoot; $wz = "$w\Purgedge.zip"; $we = "$w\setup.exe"
+	$removed = 1; do {
+		Write-Host -ForegroundColor Yellow "Attempt $removed/10"
+		try {write-host $setup $removal; start -wait $setup -args $removal} catch {}
+		do {sleep 5} while ((get-process -name 'setup','MicrosoftEdge*' -ea 0).Path -like '*\Microsoft\Edge*')
+		## setup.exe subsitution trick: replace it with an older version that will 100% do the uninstall
+		## on Edge from around version 130 and later the setup.exe it comes with deliberately blocks uninstallation
+		## no matter how many parameters or tricks you throw at it
+		if (test-path $setup -pathtype leaf) {
+			if (-not (Test-Path $wz -pathtype leaf)) {$removed = 11; break}
+			if ($removed -eq 1) {
+				Write-Host -ForegroundColor Yellow "Looks like we hit an `"irremovable`" version. Reattempting with setup.exe subsitution trick"
+				if (-not (Test-Path $we -pathtype leaf)) {Expand-Archive $wz -DestinationPath $w -Force}; copy $we $setup -force -ea 0
+			}
+			$removed++
+		} else {$removed = 11}
+	} while ($removed -le 10)
 }
 
 ## -------------------------------------------------------------------------------------------------------------------------------

@@ -43,7 +43,7 @@ function Show-Menu {
 	Write-Host " 2. Remove ALL apps for ALL OTHERS (except this user)" -ForegroundColor $elevoptsclr -n; if ($elevated) {State $debloat_allusers} else {Write-Host $null}
 	Write-Host " 3. Remove ALL provisioned apps (for new users)" -ForegroundColor $elevoptsclr -n; if ($elevated) {State $debloat_provisioned} else {Write-Host $null}
 	Write-Host " 4. Remove and ban OneDrive" -ForegroundColor $elevoptsclr -n; if ($elevated) {State $debloat_onedrive} else {Write-Host $null}
-	Write-Host " 5. Remove and ban Edge Chromium" -ForegroundColor $elevoptsclr -n; if ($elevated) {Write-Host " (NOT recommended)" -ForegroundColor Yellow -n; State $debloat_edge} else {Write-Host $null}
+	Write-Host " 5. Remove and ban Edge Chromium" -ForegroundColor $elevoptsclr -n; if ($elevated) {State $debloat_edge} else {Write-Host $null}
 	Write-Host " 6. Remove and ban EdgeWebView together with Edge" -ForegroundColor $edgwvclr -n; if ($debloat_edge) {State $debloat_edgewv} else {Write-Host $null}
 	Write-Host $null
 	Write-Host " Exclude"
@@ -78,13 +78,13 @@ function Confirm-Debloat {
 			if ($debloat_value) {$darg += "1"} else {$darg += "0"}
 		}
 		
-		$debloat_arguments = "-File `"$PSScriptRoot\Debloater.ps1`" {0} {1} {2} {3} {4} {5} `"$ec`"" -f $darg[0], $darg[1], $darg[2], $darg[3], $darg[4], $darg[5]
+		$debloat_arguments = "-File `"$PSScriptRoot\Debloater.ps1`" {0} {1} {2} {3} {4} {5} `"$ec`" `"$logpath`"" -f $darg[0], $darg[1], $darg[2], $darg[3], $darg[4], $darg[5]
 		Start-Process powershell -Wait -ArgumentList $debloat_arguments
 	}
 }
 
 while ($true) {
-	$global:debloats = @($debloat_currentuser,$debloat_allusers,$debloat_provisioned,$debloat_onedrive,$debloat_edge,$debloatedgewv)
+	$global:debloats = @($debloat_currentuser,$debloat_allusers,$debloat_provisioned,$debloat_onedrive,$debloat_edge,$debloat_edgewv)
 	Show-Menu
 	Write-Host "> " -n; $unem = Read-Host
 	Switch-MenusCheck $unem

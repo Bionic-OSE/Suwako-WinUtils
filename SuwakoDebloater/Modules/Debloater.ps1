@@ -15,6 +15,8 @@ param(
 	[int32]$debloat_edgewv,
 	[Parameter(Mandatory=$true,Position=6)]
 	[string]$debloat_excludelistpath,
+	[Parameter(Mandatory=$false,Position=7)]
+	[string]$debloat_logpath,
 	[switch]$Auto
 )
 
@@ -37,9 +39,14 @@ function Show-NotifyBalloon {
 Import-Module -DisableNameChecking $PSScriptRoot\Branding.psm1
 $elevator = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
 $elevated = $elevator.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-if ($elevated -eq $false) {$debloat_allusers = $debloat_edge = $debloat_edgewv = $false}
-if ($debloat_edge -eq $false) {$debloat_edgewv = $false}
+if ($elevated -eq $false) {$debloat_allusers = $debloat_edge = $debloat_edgewv = 0}
+if ($debloat_edge -eq 0) {$debloat_edgewv = 0}
 Show-Branding 1
+if ($debloat_logpath -ne $null) {
+	$datetime = Get-Date -f 'yyyyMMddHHmmss'
+	$logfilename = "$debloat_logpath\SuwakoDebloater--Debloatlog--$env:COMPUTERNAME--${datetime}"
+	Write-Host -ForegroundColor Cyan "Log file will be saved at $logfilename"
+}
 
 if ($Auto -eq $false) {
 	Write-Host -ForegroundColor Black -BackgroundColor Yellow "Starting the removal process" -n; Write-Host " in " -ForegroundColor Yellow -n
@@ -48,9 +55,10 @@ if ($Auto -eq $false) {
 		Start-Sleep -Seconds 1
 	}
 	Write-Host "NOW!" -ForegroundColor Red -n
-	Write-Host "`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n"
+	Write-Host "`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n`r`n"
 }
 
+if ($debloat_logpath -ne $null) {Start-Transcript -Path $logfilename -Force -IncludeInvocationHeader}
 switch (1) {
 	$debloat_currentuser {
 		Write-Host -ForegroundColor Cyan -BackgroundColor DarkGray "Removing current user's UWP apps..."
@@ -78,3 +86,4 @@ if ($Auto -eq $false) {
 	Write-Host -ForegroundColor Black -BackgroundColor White "Press Enter to close this window."
 	Read-Host
 } else {Start-Sleep -Seconds 3}
+exit

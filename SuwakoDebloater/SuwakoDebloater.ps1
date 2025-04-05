@@ -66,10 +66,12 @@ $global:debloat_edgewv = $false
 $global:debloat_excludelist = @()
 
 $global:exitsignal = $false
-$tabnexist = Test-Path -Path $PSScriptRoot\Modules\Tabn.ini -PathType Leaf
-if ($tabnexist -eq $false) {"1" | Out-File $PSScriptRoot\Modules\Tabn.ini}
+$global:logpath = "$PSScriptRoot\Logs"
+$tabpath = "$PSScriptRoot\Modules\Tabn.ini"
+if (-not (Test-Path $tabpath -PathType Leaf)) {"1" | Out-File $tabpath}
+if (-not (Test-Path $logpath)) {New-Item $logpath -ItemType Directory | Out-Null}
 while ($exitsignal -eq $false) {
-	$moduletargetraw = Get-Content $PSScriptRoot\Modules\Tabn.ini
+	$moduletargetraw = Get-Content $tabpath
 	$moduletarget = $moduletargetraw.Trim()
 	& "$PSScriptRoot\Modules\Tab${moduletarget}.ps1"
 }

@@ -8,9 +8,8 @@ function Remove-EdgeBan {
 	
 	if ($unbrickfirm -notlike "yes") {return}
 	Write-Host "Unbanning..." -ForegroundColor Cyan -BackgroundColor DarkGray 
-	Import-Module -DisableNameChecking $PSScriptRoot\Debloaveyo.psm1
-	PREPARE_EDGE; PREPARE_WEBVIEW
-	Remove-Module $PSScriptRoot\Debloaveyo.psm1
+	Start-Process powershell -Wait -WorkingDirectory "$PSScriptRoot" -ArgumentList "-Command `"Import-Module -DisableNameChecking .\Debloaveyo.psm1; PREPARE_EDGE; PREPARE_WEBVIEW; exit`""
+	# Remove-Module $PSScriptRoot\Debloaveyo.psm1
 	Write-Host "UNBAN COMPLETE" -ForegroundColor Black -BackgroundColor Green -n; Write-Host ". Try installing Edge and/or WebView now and see if it works"
 	Write-Host "Press Enter to return"; Read-Host
 }
